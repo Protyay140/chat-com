@@ -7,12 +7,15 @@ import Home from './pages/Home'
 import Chat from './pages/Chat'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
   return (
     <>
       <BrowserRouter >
+        <ToastContainer />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/chats' element={<Chat />} />

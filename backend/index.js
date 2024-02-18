@@ -5,11 +5,13 @@ const app = express();
 const cors = require('cors');
 const colors = require('colors');
 const { chats } = require('./data/data');
+const userRouter = require('./routes/userRouter');
 const connectDB = require('./db');
 
 connectDB();
 app.use(cors());
 app.use(express.json());
+app.use('/api/user',userRouter);
 
 app.get('/',(req,res)=>{
     return res.status(200).json({
