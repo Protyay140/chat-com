@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const Chat = () => {
-
     const [chat, setchat] = useState([]);
 
-    const handleChat = async () => {
-        const response = await fetch('http://localhost:3000/api/chats');
-        const data = await response.json();
+    const navigate = useNavigate();
+    useEffect(()=>{
+        const data = localStorage.getItem('token');
 
-        console.log(data.chats);
-        setchat(data.chats);
+        if(!data){
+            navigate('/Login');
+        }
+    },[navigate]);
+
+    const handleLogout = ()=>{
+        localStorage.removeItem('token');
     }
-
-    useEffect(() => {
-        handleChat();
-    }, []);
 
     return (
         <>
-            {chat.map((c)=>(
-                    <div key={c._id}>{c.chatName}</div>
-            ))}
+            <div>
+                <h1>hi there</h1>
+                <button onClick={handleLogout}>logout</button>
+            </div>
         </>
     )
 }

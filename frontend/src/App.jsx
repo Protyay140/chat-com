@@ -9,20 +9,23 @@ import Signup from './pages/Signup'
 import Login from './pages/Login'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ChatProvider from './Context/ChatProvider'
 
 function App() {
 
   return (
     <>
-      <BrowserRouter >
-        <ToastContainer />
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/chats' element={<Chat />} />
-          <Route path='/Signup' element={<Signup />} />
-          <Route path='/Login' element={<Login />} />
-        </Routes>
-      </BrowserRouter>
+      <ChatProvider>
+        <BrowserRouter >
+          <ToastContainer />
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/chats' element={<Chat />} />
+            <Route path='/Signup' element={<Signup />} />
+            <Route path='/Login' element={<Login />} />
+          </Routes>
+        </BrowserRouter>
+      </ChatProvider>
     </>
   )
 }

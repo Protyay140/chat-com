@@ -1,14 +1,47 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Login = () => {
-    const [data,setData] = useState({
-        email : "",
-        password : ""
+    const [data, setData] = useState({
+        email: "",
+        password: ""
     });
 
-    const handleSubmit = ()=>{
-        alert("successfully logged in");
+    const handleSubmit = async () => {
+        const response = await fetch('http://localhost:8000/api/user/login', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        })
+
+        if (!response.ok) {
+            console.log(response);
+            toast.error("login failed ...", {
+                position: "top-center"
+            })
+            return;
+        }
+
+        setData({
+            email: "",
+            password: "",
+        })
+
+        const userData = await response.json();
+        console.log(userData);
+
+        // set the user token in local-storage ....
+        const token = userData.token;
+        localStorage.setItem('token', token);
+
+        toast.success("login successfull ...", {
+            position: "top-center"
+        });
+
+        navigate('/');
     }
 
     const navigate = useNavigate();
@@ -16,7 +49,7 @@ const Login = () => {
     return (
         <>
             <div className="outer grid grid-cols-12 py-14">
-                <div className="container shadow-md shadow-slate-600 col-start-5 col-span-6 w-fit p-5">
+                <div className="container shadow-md shadow-slate-600 col-start-5 col-span-6 w-fit p-5 hover:transition-all hover:shadow-lg hover:shadow-slate-700">
                     <div className="header flex flex-col mb-5">
                         <div className='mx-auto font-bold text-xl'>Login</div>
                         <div className='text-sm text-gray-500'>Enter your credential to access your acocunt</div>
