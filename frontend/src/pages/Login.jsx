@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useRecoilState } from 'recoil';
+import { chatAtom } from '../store/chatAtom';
 
 const Login = () => {
+    const [user,setUser] = useRecoilState(chatAtom);
     const [data, setData] = useState({
         email: "",
         password: ""
@@ -31,17 +34,24 @@ const Login = () => {
         })
 
         const userData = await response.json();
-        console.log(userData);
+        // console.log(userData);
 
         // set the user token in local-storage ....
         const token = userData.token;
         localStorage.setItem('token', token);
 
+        setUser({
+            isLoggedIn : true,
+            username : userData.username,
+            email : userData.email,
+            imgUrl : userData.imgUrl
+        })
+
         toast.success("login successfull ...", {
             position: "top-center"
         });
 
-        navigate('/');
+        navigate('/chats');
     }
 
     const navigate = useNavigate();

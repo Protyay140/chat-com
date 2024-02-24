@@ -10,11 +10,7 @@ const ChatProvider = ({ children }) => {
         const data = localStorage.getItem('token');
         setUser(data);
 
-        console.log(data);
-        // if (!user) {
-        //     navigate('/');
-        // }
-    }, [])
+    }, [user])
 
     return <ChatContext.Provider value={{ user, setUser }}>
         {children}

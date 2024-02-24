@@ -20,7 +20,9 @@ router.post('/signup', userSignupValidation, async (req, res) => {
         res.status(200).json({
             msg: "user is successfully registered ...",
             token: token,
-
+            username : newUser.username,
+            email : newUser.email,
+            imgUrl : newUser.picture
         })
 
     } catch (e) {
@@ -39,7 +41,10 @@ router.post('/login', userLoginValidation, async (req, res) => {
         const token = jwt.sign({userId : loginUser._id}, process.env.JWT_SECRET);
         return res.status(200).json({
             msg: "user is successfully logged in ...",
-            token: token
+            token: token,
+            username : loginUser.username,
+            email : loginUser.email,
+            imgUrl : loginUser.picture
         })
     } catch (e) {
         console.log('error is login : ', e);

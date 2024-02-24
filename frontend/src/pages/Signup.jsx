@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useRecoilState } from 'recoil';
+import { chatAtom } from '../store/chatAtom';
 
 const Signup = () => {
     const [data, setData] = useState({
@@ -12,6 +14,8 @@ const Signup = () => {
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
+
+    const [user,setUser] = useRecoilState(chatAtom);
 
     const postDetails = async (pics) => {
         if (pics == undefined) {
@@ -75,6 +79,13 @@ const Signup = () => {
             // set the user token in local-storage ....
             const token = userData.token;
             localStorage.setItem('token', token);
+
+            setUser({
+                isLoggedIn : true,
+                username : userData.username,
+                email : userData.email,
+                imgUrl : userData.imgUrl
+            })
 
             toast.success("registration successfull ...", {
                 position: "top-center"
