@@ -9,13 +9,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import ChatProvider from './Context/ChatProvider'
 import MainApp from './components/MainApp'
 import { RecoilRoot } from 'recoil'
+import { ChakraProvider } from '@chakra-ui/react'
 
 function App() {
 
   return (
     <>
       <RecoilRoot >
-        <MainApp />
+        <ChakraProvider>
+          <MainApp />
+        </ChakraProvider>
       </RecoilRoot>
     </>
   )

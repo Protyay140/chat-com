@@ -5,6 +5,10 @@ import { useRecoilState } from 'recoil';
 import { chatAtom } from '../store/chatAtom';
 import { toast } from 'react-toastify';
 import Navbar from '../components/Navbar';
+import SideBar from '../components/SideBar';
+import LeftBar from '../components/LeftBar';
+import RightBar from '../components/RightBar';
+import { Box } from '@chakra-ui/react' ;
 
 const Chat = () => {
     const [user, setUser] = useRecoilState(chatAtom);
@@ -33,10 +37,10 @@ const Chat = () => {
                 const { username, email, picture } = userData;
 
                 setUser({
-                    isLoggedIn : true,
-                    username : username,
-                    email : email,
-                    imgUrl : picture
+                    isLoggedIn: true,
+                    username: username,
+                    email: email,
+                    imgUrl: picture
                 })
             }
         };
@@ -65,6 +69,12 @@ const Chat = () => {
             <div>
                 <Navbar />
             </div>
+            
+            <Box className='flex justify-between p-4'>
+                <LeftBar />
+                <RightBar />
+            </Box>
+
         </>
     )
 }
