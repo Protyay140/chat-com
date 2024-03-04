@@ -9,3 +9,13 @@ export const chatAtom = atom({
         imgUrl : ""
     }
 })
+
+export const myChatsAtom = atom({
+    key : 'myChatsAtom',
+    default : [{}]
+})
+
+export const selectedChatAtom = atom({
+    key : 'selectedChatAtom',
+    default : {}
+})

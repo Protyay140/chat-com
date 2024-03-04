@@ -70,7 +70,7 @@ const Chat = () => {
                 <Navbar />
             </div>
             
-            <Box className='flex justify-between p-4'>
+            <Box className='flex justify-between px-4 gap-2'>
                 <LeftBar />
                 <RightBar />
             </Box>

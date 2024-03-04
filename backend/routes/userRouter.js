@@ -52,7 +52,7 @@ router.post('/login', userLoginValidation, async (req, res) => {
 })
 
 router.get('/me',authMiddleware, (req, res) => {
-    console.log(req.user);
+    // console.log(req.user);
     return res.status(200).json({
         MyAccount : req.user
     })

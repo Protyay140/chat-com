@@ -9,7 +9,7 @@ const authMiddleware = async (req, res, next) => {
             req.user = await User.findOne({ _id: decoded.userId }).select("-password");
             // console.log(req.user);
             next();
-        } catch (error) {
+        } catch (e) {
             console.log(`error in authmiddleware : ${e}`);
         }
     } else {
