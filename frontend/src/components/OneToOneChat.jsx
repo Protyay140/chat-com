@@ -52,7 +52,7 @@ const OneToOneChat = () => {
             setSocketConnected(true);
             console.log("user is connected : ", socket.id);
         })
-        
+
 
     }, [user.isLoggedIn]);
 
@@ -63,13 +63,15 @@ const OneToOneChat = () => {
     }, [selectedChat])
 
     useEffect(() => {
-        socket.on('message received', (newMessage) => {
-            if (!realTimeChat || selectedChat._id == newMessage.chat._id) {
+        socket.on("message received", (newMessage) => {
+            if (!realTimeChat || selectedChat._id != newMessage.chat._id) {
                 //notification message ....
             } else {
                 console.log("received message : ",newMessage);
-                setMessages([...messages, newMessage]);
+                   setMessages([...messages, newMessage]);
             }
+            // console.log("real time chat : ",realTimeChat);
+            // setMessages([...messages, newMessage]);
         })
     });
 
