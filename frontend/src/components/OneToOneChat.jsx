@@ -4,10 +4,10 @@ import { chatAtom, selectedChatAtom } from '../store/chatAtom'
 import { IoIosLock } from "react-icons/io";
 import { AlertTitle, FormControl, Input } from '@chakra-ui/react';
 import { IoSendSharp } from "react-icons/io5";
-import {io} from 'socket.io-client'
+import { io } from 'socket.io-client'
 
 
-// var socket, realTimeChat;
+var socket, realTimeChat;
 const ENDPOINT = "http://localhost:8000";
 
 const OneToOneChat = () => {
@@ -17,6 +17,7 @@ const OneToOneChat = () => {
     const [messages, setMessages] = useState([]);
     const [user, setUser] = useRecoilState(chatAtom);
     const [loading, setLoading] = useState(false);
+    const [socketConnected, setSocketConnected] = useState(false);
 
     // const socket = io("http://localhost:5173");
 
@@ -34,20 +35,39 @@ const OneToOneChat = () => {
             console.log(data.messages);
             setMessages(data.messages);
 
+
+            socket.emit('chat-room', selectedChat._id);
         } catch (e) {
             console.log(`error in fetching all the messages of a chat : ${e}`);
         }
     }
 
-    useEffect(() => {
-        // console.log("selected chat : ", selectedChat);
-        fetchMessages();
-    }, [selectedChat])
 
     useEffect(() => {
         // socket = io(ENDPOINT);
-        const socket = io(ENDPOINT);
-    }, []);
+        console.log("user in socket : ", user);
+        socket = io(ENDPOINT);
+        socket.emit("connection for chat", user);
+        socket.on('connection', () => {
+            setSocketConnected(true);
+        })
+    }, [user.isLoggedIn]);
+
+    useEffect(() => {
+        // console.log("selected chat : ", selectedChat);
+        fetchMessages();
+        realTimeChat = selectedChat;
+    }, [selectedChat])
+
+    useEffect(() => {
+        socket.on('message received', (newMessage) => {
+            if (!realTimeChat || selectedChat._id == newMessage.chat._id) {
+                //notification message ....
+            } else {
+                setMessages([...messages, newMessage]);
+            }
+        })
+    });
 
     const sendMessage = async () => {
 
@@ -70,6 +90,8 @@ const OneToOneChat = () => {
             const data = await result.json();
             // console.log(data);
             setMessages([...messages, data]);
+
+            socket.emit('new message', data);
         } catch (e) {
             console.log(`error in sending the new message : ${e}`);
         }
@@ -110,7 +132,7 @@ const OneToOneChat = () => {
                             }
                         </h1>
                     </div>
-                    <div className='bg-slate-300 overflow-y-auto max-h-96 h-full flex flex-col p-1'>
+                    <div className='bg-slate-300 overflow-y-auto max-h-96 h-full flex flex-col p-1' style={{ scrollbarWidth: 'thin', scrollbarColor: 'transparent transparent'}}>
                         {
                             messages &&
                             messages.map((m, i) => {

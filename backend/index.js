@@ -53,4 +53,28 @@ server.listen(port, () => {
 
 io.on("connection", (socket) => {
     console.log(`successfully connected to socket.io`);
+
+    socket.on('connection for chat',(userData)=>{
+        socket.join(userData._id);
+        console.log("user in socket : ",userData);
+        socket.emit('user is connected ...');
+    })
+
+
+    socket.on('chat-room',(room)=>{
+        socket.join(room);
+        console.log('user joined room', room);
+    })
+
+    socket.on("new message",(newMessage)=>{
+        var chat = newMessage.chat;
+
+        if(!chat.users) return console.log(`no users found`);
+
+        chat.users.forEach((user)=>{
+            if(user._id == newMessage.sender._id) return ;
+
+            socket.in(user._id).emit('message received',newMessage);
+        });
+    })
 })

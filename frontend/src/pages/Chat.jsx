@@ -8,7 +8,7 @@ import Navbar from '../components/Navbar';
 import SideBar from '../components/SideBar';
 import LeftBar from '../components/LeftBar';
 import RightBar from '../components/RightBar';
-import { Box } from '@chakra-ui/react' ;
+import { Box } from '@chakra-ui/react';
 
 const Chat = () => {
     const [user, setUser] = useRecoilState(chatAtom);
@@ -50,8 +50,10 @@ const Chat = () => {
             checkToken();
         };
 
-        window.addEventListener('storage', handleStorageChange);
-
+        // window.addEventListener('storage', handleStorageChange);
+        // return () => {
+        //     window.removeEventListener('storage', handleStorageChange);
+        // };
     }, [user.isLoggedIn]);
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -69,7 +71,7 @@ const Chat = () => {
             <div>
                 <Navbar />
             </div>
-            
+
             <Box className='flex justify-between px-4 gap-2'>
                 <LeftBar />
                 <RightBar />

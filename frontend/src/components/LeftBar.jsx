@@ -54,7 +54,7 @@ const LeftBar = () => {
                             {
                                 myAllChats.map((chat, key) => {
                                     return (
-                                        <div key={chat._id} className='mb-3 ml-14'>
+                                        <div key={chat._id} className='mb-3 md:ml-14 '>
                                             <button className={`p-1 rounded-sm shadow shadow-slate-500 flex justify-between w-52 px-3 ${selectedChat._id == chat._id ? 'bg-green-600 text-white' : ''}`}
                                                 onClick={() => {
                                                     setSelectedChat(chat);
