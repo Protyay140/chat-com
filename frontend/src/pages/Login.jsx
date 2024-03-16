@@ -5,7 +5,7 @@ import { useRecoilState } from 'recoil';
 import { chatAtom } from '../store/chatAtom';
 
 const Login = () => {
-    const [user,setUser] = useRecoilState(chatAtom);
+    const [user, setUser] = useRecoilState(chatAtom);
     const [data, setData] = useState({
         email: "",
         password: ""
@@ -41,10 +41,11 @@ const Login = () => {
         localStorage.setItem('token', token);
 
         setUser({
-            isLoggedIn : true,
-            username : userData.username,
-            email : userData.email,
-            imgUrl : userData.imgUrl
+            isLoggedIn: true,
+            username: userData.username,
+            email: userData.email,
+            imgUrl: userData.imgUrl,
+            id: userData.id
         })
 
         toast.success("login successfull ...", {

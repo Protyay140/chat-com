@@ -84,7 +84,8 @@ const Signup = () => {
                 isLoggedIn : true,
                 username : userData.username,
                 email : userData.email,
-                imgUrl : userData.imgUrl
+                imgUrl : userData.imgUrl,
+                id : userData.id
             })
 
             toast.success("registration successfull ...", {

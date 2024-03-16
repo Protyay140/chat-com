@@ -39,7 +39,7 @@ app.get('/api/chats', (req, res) => {
     })
 })
 
-const port = process.env.PORT || 8000;
+const port = 8000;
 server.listen(port, () => {
     console.log(`server is running on port ${port}`.yellow.bold);
 })
@@ -53,9 +53,11 @@ server.listen(port, () => {
 
 io.on("connection", (socket) => {
     console.log(`successfully connected to socket.io`);
-
-    socket.on('connection for chat',(userData)=>{
-        socket.join(userData._id);
+    // console.log("user : ",socket.id);
+    // socket.broadcast.emit('welcome',"welcome to our service 4");
+    socket.on('setup',(userData)=>{
+        socket.join(userData.id);
+        console.log("fuckkkkkkkkkkkkkk",userData.id);
         console.log("user in socket : ",userData);
         socket.emit('user is connected ...');
     })
@@ -66,11 +68,12 @@ io.on("connection", (socket) => {
         console.log('user joined room', room);
     })
 
-    socket.on("new message",(newMessage)=>{
+    socket.on("NewMessage",(newMessage)=>{
         var chat = newMessage.chat;
 
         if(!chat.users) return console.log(`no users found`);
-
+        console.log("user chat : ",chat);
+        console.log("sender : ",newMessage.sender);
         chat.users.forEach((user)=>{
             if(user._id == newMessage.sender._id) return ;
 

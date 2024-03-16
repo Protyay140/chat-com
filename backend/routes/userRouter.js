@@ -22,7 +22,8 @@ router.post('/signup', userSignupValidation, async (req, res) => {
             token: token,
             username : newUser.username,
             email : newUser.email,
-            imgUrl : newUser.picture
+            imgUrl : newUser.picture,
+            id : newUser._id
         })
 
     } catch (e) {
@@ -44,7 +45,8 @@ router.post('/login', userLoginValidation, async (req, res) => {
             token: token,
             username : loginUser.username,
             email : loginUser.email,
-            imgUrl : loginUser.picture
+            imgUrl : loginUser.picture,
+            id : loginUser._id
         })
     } catch (e) {
         console.log('error is login : ', e);

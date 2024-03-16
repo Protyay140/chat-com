@@ -6,7 +6,8 @@ export const chatAtom = atom({
         isLoggedIn : false,
         username : "",
         email : "",
-        imgUrl : ""
+        imgUrl : "",
+        id:""
     }
 })
 

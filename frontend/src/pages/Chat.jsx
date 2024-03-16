@@ -34,13 +34,14 @@ const Chat = () => {
                 const userDataInfo = await response.json();
                 // console.log("userData : ", userDataInfo.MyAccount);
                 const userData = userDataInfo.MyAccount;
-                const { username, email, picture } = userData;
+                const { username, email, picture , _id} = userData;
 
                 setUser({
                     isLoggedIn: true,
                     username: username,
                     email: email,
-                    imgUrl: picture
+                    imgUrl: picture,
+                    id : _id
                 })
             }
         };

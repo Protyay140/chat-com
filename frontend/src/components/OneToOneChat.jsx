@@ -47,10 +47,13 @@ const OneToOneChat = () => {
         // socket = io(ENDPOINT);
         console.log("user in socket : ", user);
         socket = io(ENDPOINT);
-        socket.emit("connection for chat", user);
-        socket.on('connection', () => {
+        socket.emit("setup", user);
+        socket.on('connected', () => {
             setSocketConnected(true);
+            console.log("user is connected : ", socket.id);
         })
+        
+
     }, [user.isLoggedIn]);
 
     useEffect(() => {
@@ -64,6 +67,7 @@ const OneToOneChat = () => {
             if (!realTimeChat || selectedChat._id == newMessage.chat._id) {
                 //notification message ....
             } else {
+                console.log("received message : ",newMessage);
                 setMessages([...messages, newMessage]);
             }
         })
@@ -91,7 +95,7 @@ const OneToOneChat = () => {
             // console.log(data);
             setMessages([...messages, data]);
 
-            socket.emit('new message', data);
+            socket.emit('NewMessage', data);
         } catch (e) {
             console.log(`error in sending the new message : ${e}`);
         }
@@ -132,7 +136,7 @@ const OneToOneChat = () => {
                             }
                         </h1>
                     </div>
-                    <div className='bg-slate-300 overflow-y-auto max-h-96 h-full flex flex-col p-1' style={{ scrollbarWidth: 'thin', scrollbarColor: 'transparent transparent'}}>
+                    <div className='bg-slate-300 overflow-y-auto max-h-96 h-full flex flex-col p-1' style={{ scrollbarWidth: 'thin', scrollbarColor: 'transparent transparent' }}>
                         {
                             messages &&
                             messages.map((m, i) => {
