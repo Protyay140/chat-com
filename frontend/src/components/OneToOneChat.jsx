@@ -62,6 +62,7 @@ const OneToOneChat = () => {
         // console.log("selected chat : ", selectedChat);
         fetchMessages();
         realTimeChat = selectedChat;
+        console.log("selected chat fuckkkkkkkk : ", selectedChat?.groupAdmin?.username);
     }, [selectedChat])
 
     useEffect(() => {
@@ -189,20 +190,32 @@ const OneToOneChat = () => {
                             })
                         }
                     </div>
-                    <div className='m-1 flex gap-2'>
-                        <div className='w-full'><input type="text" className='p-2 w-full border border-slate-600 rounded-md focus:outline-slate-600' onKeyDown={(e) => {
-                            if (e.key == 'Enter') {
-                                sendMessage();
-                            }
-                        }}
-                            value={message}
-                            onChange={(e) => {
-                                setMessage(e.target.value)
-                            }}
-                            placeholder='Type a message . . . . . . . . . .'
-                        /></div>
-                        <div className='text-3xl mt-1 hover:text-slate-700 hover:cursor-pointer' onClick={sendMessage}><IoSendSharp /></div>
-                    </div>
+
+
+                    {
+                        ((selectedChat?.chatName == 'admin') && (selectedChat?.groupAdmin?.username == 'protyay140')) ?
+                            <>
+                                <div className='m-1 flex gap-2'>
+                                    <div className='w-full'><input type="text" className='p-2 w-full border border-slate-600 rounded-md focus:outline-slate-600' onKeyDown={(e) => {
+                                        if (e.key == 'Enter') {
+                                            sendMessage();
+                                        }
+                                    }}
+                                        value={message}
+                                        onChange={(e) => {
+                                            setMessage(e.target.value)
+                                        }}
+                                        placeholder='Type a message . . . . . . . . . .'
+                                    /></div>
+                                    <div className='text-3xl mt-1 hover:text-slate-700 hover:cursor-pointer' onClick={sendMessage}><IoSendSharp /></div>
+                                </div>
+                            </> :
+                            <>
+
+                            </>
+                    }
+
+
                 </>
             }
         </>

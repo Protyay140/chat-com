@@ -70,6 +70,7 @@ router.get('/accessChat', authMiddleware, async (req, res) => {
 })
 
 
+
 // creating group chat .....
 router.post('/GroupChat', authMiddleware, async (req, res) => {
     if (!req.body.users || !req.body.name) {
@@ -148,26 +149,26 @@ router.put('/addToGroup', authMiddleware, async (req, res) => {
     try {
         const { chatId, userId } = req.body;
 
-        if(!chatId && !userId){
+        if (!chatId && !userId) {
             return res.status(400).json({
-                msg : "chat id and user id both must be needed ...",
+                msg: "chat id and user id both must be needed ...",
             })
         }
 
         const result = await Chat.findOneAndUpdate({
-            isGroupChat : true,
-            _id : chatId,
-        },{
-            $push : {
-                users : userId 
+            isGroupChat: true,
+            _id: chatId,
+        }, {
+            $push: {
+                users: userId
             }
-        },{
-            new : true
-        }).populate("users","-password").populate("currentMessage")
+        }, {
+            new: true
+        }).populate("users", "-password").populate("currentMessage")
 
-        if(!result){
+        if (!result) {
             return res.status(400).json({
-                msg : " group chat or user is not found ..... "
+                msg: " group chat or user is not found ..... "
             })
         }
 
@@ -182,28 +183,28 @@ router.put('/addToGroup', authMiddleware, async (req, res) => {
 
 router.put('/removeFromGroup', authMiddleware, async (req, res) => {
     try {
-        const {chatId , userId} = req.body;
+        const { chatId, userId } = req.body;
 
-        if(!chatId && !userId){
+        if (!chatId && !userId) {
             return res.status(400).json({
-                msg : "group chat name and userid is needed ...",
+                msg: "group chat name and userid is needed ...",
             })
         }
 
         const result = await Chat.findOneAndUpdate({
-            _id : chatId,
-            isGroupChat : true,
-        },{
-            $pull : {
-                users : userId
+            _id: chatId,
+            isGroupChat: true,
+        }, {
+            $pull: {
+                users: userId
             }
-        },{
-            new : true,
-        }).populate("users","-password").populate("currentMessage");
+        }, {
+            new: true,
+        }).populate("users", "-password").populate("currentMessage");
 
-        if(!result){
+        if (!result) {
             return res.status(400).json({
-                msg : "chat not found ..."
+                msg: "chat not found ..."
             })
         }
 
@@ -215,5 +216,43 @@ router.put('/removeFromGroup', authMiddleware, async (req, res) => {
         console.log('error in removing a member form the group ')
     }
 })
+
+
+router.post('/Adminchat', authMiddleware, async (req, res) => {
+    // if (!req.body.users || !req.body.name) {
+    //     return res.status(400).json({
+    //         msg: "group name and user list must be needed ..."
+    //     })
+    // }
+
+    // var users = JSON.parse(req.body.users);
+    const users = await User.find({});
+    // if (users.length < 2) {
+    //     return res.status(400).json({
+    //         msg: "group should consist atleast 3 members",
+    //     })
+    // }
+
+    // users.push(req.user);
+
+    try {
+        const groupChat = await Chat.create({
+            chatName: "admin",
+            users: users,
+            isGroupChat: true,
+            groupAdmin: req.user,
+        })
+
+        const fullGroupChat = await Chat.findOne({ _id: groupChat._id })
+            .populate("users", "-password")
+            .populate("groupAdmin", "-password");
+
+        res.status(200).json(fullGroupChat);
+
+    } catch (e) {
+        console.log(`error in creating the group : ${e}`);
+    }
+});
+
 
 module.exports = router;

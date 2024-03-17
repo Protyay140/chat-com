@@ -4,7 +4,7 @@ import { chatAtom, myChatsAtom, selectedChatAtom } from '../store/chatAtom';
 import { ImSpinner6 } from "react-icons/im";
 import { IoCreateOutline } from "react-icons/io5";
 import GroupChatModel from './GroupChatModel';
-
+import axios from 'axios'
 const LeftBar = () => {
     const [myAllChats, setMyAllChats] = useRecoilState(myChatsAtom);
     const [selectedChat, setSelectedChat] = useRecoilState(selectedChatAtom);
@@ -36,8 +36,35 @@ const LeftBar = () => {
 
     useEffect(() => {
         fetchChats();
+        // handleAdminChat();
         console.log("user is leftBar : ", user);
     }, []);
+
+
+    const handleAdminChat = async () => {
+        // alert("broadcasting");
+        try {
+            const token = localStorage.getItem('token');
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            };
+            const { data } = await axios.post(
+                `http://localhost:8000/api/chat/Adminchat`,
+                {
+
+                },
+                config
+            );
+            if (!myAllChats.find((c) => c._id == data._id)) setMyAllChats([data, ...myAllChats]);
+            setSelectedChat(data);
+            setLoading(false);
+            console.log("broadcast data : ", data);
+        } catch (e) {
+            console.log('erorr in broadcasting ', e);
+        }
+    }
 
     return (
         <>
@@ -59,6 +86,16 @@ const LeftBar = () => {
                     </div>
                 </div>
                 <div>
+                    {
+                       user?.username == "protyay140" ? <button className='mb-2 md:ml-14 p-2 bg-yellow-500 rounded-md hover:bg-yellow-600 text-white'
+                            onClick={handleAdminChat}
+                        >
+                            broadcast
+                        </button> :<>
+                            
+                        </>
+                    }
+
                     {
                         myAllChats ? <>
                             {

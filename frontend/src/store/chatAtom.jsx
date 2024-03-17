@@ -7,7 +7,7 @@ export const chatAtom = atom({
         username : "",
         email : "",
         imgUrl : "",
-        id:""
+        id:"",
     }
 })
 
