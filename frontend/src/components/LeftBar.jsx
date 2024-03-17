@@ -114,7 +114,7 @@ const LeftBar = () => {
                             </>
                     }
                 </div>
-                <div className='mt-44 text-center'>
+                <div className='mt-28 text-center'>
                     @copyright by <span className='font-bold'> protyay </span>
                 </div>
             </div>

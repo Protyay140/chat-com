@@ -61,7 +61,7 @@ router.post('/', authMiddleware, async (req, res) => {
 router.get('/:chatId', authMiddleware, async (req, res) => {
     try {
         const messages = await Message.find({ chat: req.params.chatId }).populate("sender")
-            .populate('chat');
+            .populate('chat')
 
         res.status(200).json({
             messages

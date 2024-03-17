@@ -5,6 +5,7 @@ import { IoIosLock } from "react-icons/io";
 import { AlertTitle, FormControl, Input } from '@chakra-ui/react';
 import { IoSendSharp } from "react-icons/io5";
 import { io } from 'socket.io-client'
+import ShowGroupMembers from './ShowGroupMembers';
 
 
 var socket, realTimeChat;
@@ -18,6 +19,7 @@ const OneToOneChat = () => {
     const [user, setUser] = useRecoilState(chatAtom);
     const [loading, setLoading] = useState(false);
     const [socketConnected, setSocketConnected] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     // const socket = io("http://localhost:5173");
 
@@ -104,6 +106,11 @@ const OneToOneChat = () => {
 
     }
 
+
+    const handleShowMessage = () => {
+        console.log("show messages : ", messages[0].chat?.users);
+    }
+
     return (
         <>
             {
@@ -116,7 +123,7 @@ const OneToOneChat = () => {
                         </div>
                     </div>
                 </> : <>
-                    <div className='mx-auto'>
+                    <div className='mx-auto flex gap-3'>
                         <h1 className='font-bold my-2'>
                             {
                                 selectedChat.isGroupChat ? <>
@@ -137,6 +144,20 @@ const OneToOneChat = () => {
                                 </>
                             }
                         </h1>
+                        {
+                            selectedChat.isGroupChat ? <>
+                                <div className='my-1'>
+                                    <ShowGroupMembers
+
+                                    >
+
+                                    </ShowGroupMembers>
+                                </div>
+                            </> : <>
+
+                            </>
+                        }
+
                     </div>
                     <div className='bg-slate-300 overflow-y-auto max-h-96 h-full flex flex-col p-1' style={{ scrollbarWidth: 'thin', scrollbarColor: 'transparent transparent' }}>
                         {
@@ -156,33 +177,33 @@ const OneToOneChat = () => {
                                             </> :
                                                 <>
                                                     <div key={m._id} className=' w-fit  mb-2 text-white gap-1 flex'>
-                                                    <div className='text-black border h-10 w-10 rounded-full text-center bg-orange-950'>
-                                                        <h1 className='mt-2 font-bold text-white'>{m.sender?.username && m.sender.username.charAt(0).toUpperCase()}</h1></div>
-                                                    <div className='bg-sky-500 p-1 rounded-md'>{m.content}</div>
-                                                </div>
-                                    </>
+                                                        <div className='text-black border h-10 w-10 rounded-full text-center bg-orange-950'>
+                                                            <h1 className='mt-2 font-bold text-white'>{m.sender?.username && m.sender.username.charAt(0).toUpperCase()}</h1></div>
+                                                        <div className='bg-sky-500 p-1 rounded-md'>{m.content}</div>
+                                                    </div>
+                                                </>
                                         }
 
                                     </div>
-                    )
+                                )
                             })
                         }
-                </div>
-            <div className='m-1 flex gap-2'>
-                <div className='w-full'><input type="text" className='p-2 w-full border border-slate-600 rounded-md focus:outline-slate-600' onKeyDown={(e) => {
-                    if (e.key == 'Enter') {
-                        sendMessage();
-                    }
-                }}
-                    value={message}
-                    onChange={(e) => {
-                        setMessage(e.target.value)
-                    }}
-                    placeholder='Type a message . . . . . . . . . .'
-                /></div>
-                <div className='text-3xl mt-1 hover:text-slate-700 hover:cursor-pointer' onClick={sendMessage}><IoSendSharp /></div>
-            </div>
-        </>
+                    </div>
+                    <div className='m-1 flex gap-2'>
+                        <div className='w-full'><input type="text" className='p-2 w-full border border-slate-600 rounded-md focus:outline-slate-600' onKeyDown={(e) => {
+                            if (e.key == 'Enter') {
+                                sendMessage();
+                            }
+                        }}
+                            value={message}
+                            onChange={(e) => {
+                                setMessage(e.target.value)
+                            }}
+                            placeholder='Type a message . . . . . . . . . .'
+                        /></div>
+                        <div className='text-3xl mt-1 hover:text-slate-700 hover:cursor-pointer' onClick={sendMessage}><IoSendSharp /></div>
+                    </div>
+                </>
             }
         </>
     )
