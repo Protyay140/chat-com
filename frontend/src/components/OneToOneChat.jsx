@@ -193,7 +193,7 @@ const OneToOneChat = () => {
 
 
                     {
-                        ((selectedChat?.chatName == 'admin') && (selectedChat?.groupAdmin?.username == 'protyay140')) ?
+                        ((selectedChat?.chatName == 'admin' && user?.username == 'protyay140') || (selectedChat?.chatName != 'admin')) ?
                             <>
                                 <div className='m-1 flex gap-2'>
                                     <div className='w-full'><input type="text" className='p-2 w-full border border-slate-600 rounded-md focus:outline-slate-600' onKeyDown={(e) => {
