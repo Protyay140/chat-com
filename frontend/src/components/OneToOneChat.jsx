@@ -32,7 +32,7 @@ const OneToOneChat = () => {
 
             const data = await result.json();
 
-            console.log(data.messages);
+            // console.log(data.messages);
             setMessages(data.messages);
 
 
@@ -45,12 +45,12 @@ const OneToOneChat = () => {
 
     useEffect(() => {
         // socket = io(ENDPOINT);
-        console.log("user in socket : ", user);
+        // console.log("user in socket : ", user);
         socket = io(ENDPOINT);
         socket.emit("setup", user);
         socket.on('connected', () => {
             setSocketConnected(true);
-            console.log("user is connected : ", socket.id);
+            // console.log("user is connected : ", socket.id);
         })
 
 
@@ -67,8 +67,8 @@ const OneToOneChat = () => {
             if (!realTimeChat || selectedChat._id != newMessage.chat._id) {
                 //notification message ....
             } else {
-                console.log("received message : ",newMessage);
-                   setMessages([...messages, newMessage]);
+                console.log("received message : ", newMessage);
+                setMessages([...messages, newMessage]);
             }
             // console.log("real time chat : ",realTimeChat);
             // setMessages([...messages, newMessage]);
@@ -146,37 +146,43 @@ const OneToOneChat = () => {
                                     <div key={m._id}>
                                         {
                                             m.sender?.username == user.username ? <>
-                                                <div key={m._id} className=' w-fit bg-green-700 mb-2 text-white p-1 rounded-md ml-auto'>
-                                                    {m.content}
+
+                                                <div key={m._id} className='w-fit mb-2 text-white  ml-auto flex gap-1'>
+                                                    <div className='text-black border h-10 w-10 rounded-full text-center bg-slate-800'>
+                                                        <h1 className='mt-2 font-bold text-white'>{m.sender?.username && m.sender.username.charAt(0).toUpperCase()}</h1></div>
+                                                    <div className='bg-green-700 p-1 rounded-md'>{m.content}</div>
                                                 </div>
+
                                             </> :
                                                 <>
-                                                    <div key={m._id} className=' w-fit bg-sky-500 mb-2 text-white p-1 rounded-md'>
-                                                        {m.content}
-                                                    </div>
-                                                </>
+                                                    <div key={m._id} className=' w-fit  mb-2 text-white gap-1 flex'>
+                                                    <div className='text-black border h-10 w-10 rounded-full text-center bg-orange-950'>
+                                                        <h1 className='mt-2 font-bold text-white'>{m.sender?.username && m.sender.username.charAt(0).toUpperCase()}</h1></div>
+                                                    <div className='bg-sky-500 p-1 rounded-md'>{m.content}</div>
+                                                </div>
+                                    </>
                                         }
 
                                     </div>
-                                )
+                    )
                             })
                         }
-                    </div>
-                    <div className='m-1 flex gap-2'>
-                        <div className='w-full'><input type="text" className='p-2 w-full border border-slate-600 rounded-md focus:outline-slate-600' onKeyDown={(e) => {
-                            if (e.key == 'Enter') {
-                                sendMessage();
-                            }
-                        }}
-                            value={message}
-                            onChange={(e) => {
-                                setMessage(e.target.value)
-                            }}
-                            placeholder='Type a message . . . . . . . . . .'
-                        /></div>
-                        <div className='text-3xl mt-1 hover:text-slate-700 hover:cursor-pointer' onClick={sendMessage}><IoSendSharp /></div>
-                    </div>
-                </>
+                </div>
+            <div className='m-1 flex gap-2'>
+                <div className='w-full'><input type="text" className='p-2 w-full border border-slate-600 rounded-md focus:outline-slate-600' onKeyDown={(e) => {
+                    if (e.key == 'Enter') {
+                        sendMessage();
+                    }
+                }}
+                    value={message}
+                    onChange={(e) => {
+                        setMessage(e.target.value)
+                    }}
+                    placeholder='Type a message . . . . . . . . . .'
+                /></div>
+                <div className='text-3xl mt-1 hover:text-slate-700 hover:cursor-pointer' onClick={sendMessage}><IoSendSharp /></div>
+            </div>
+        </>
             }
         </>
     )

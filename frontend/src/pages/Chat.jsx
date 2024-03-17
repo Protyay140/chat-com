@@ -34,14 +34,14 @@ const Chat = () => {
                 const userDataInfo = await response.json();
                 // console.log("userData : ", userDataInfo.MyAccount);
                 const userData = userDataInfo.MyAccount;
-                const { username, email, picture , _id} = userData;
+                const { username, email, picture, _id } = userData;
 
                 setUser({
                     isLoggedIn: true,
                     username: username,
                     email: email,
                     imgUrl: picture,
-                    id : _id
+                    id: _id
                 })
             }
         };
@@ -74,8 +74,9 @@ const Chat = () => {
             </div>
 
             <Box className='flex justify-between px-4 gap-2'>
-                <LeftBar />
+                <LeftBar/>
                 <RightBar />
+
             </Box>
 
         </>

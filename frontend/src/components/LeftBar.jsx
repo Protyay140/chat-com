@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil';
 import { chatAtom, myChatsAtom, selectedChatAtom } from '../store/chatAtom';
 import { ImSpinner6 } from "react-icons/im";
+import { IoCreateOutline } from "react-icons/io5";
+import GroupChatModel from './GroupChatModel';
 
 const LeftBar = () => {
     const [myAllChats, setMyAllChats] = useRecoilState(myChatsAtom);
@@ -39,10 +41,18 @@ const LeftBar = () => {
 
     return (
         <>
-            <div className='shadow shadow-slate-500 rounded-md p-6 mb-1 flex flex-col justify-between w-2/5'>
+            <div className='shadow shadow-slate-500 rounded-md p-6 mb-1 flex flex-col justify-between w-2/5 hidden md:block'>
                 <div className='flex justify-between mb-3'>
-                    <div className='font-bold text-xl'>
-                        Chats
+                    <div className='flex justify-around gap-28  '>
+                        <div className='font-bold text-xl '>Chats</div>
+                        <GroupChatModel>
+                            <button className='flex gap-1 p-1 '>
+                                <div className='mt-2'>
+                                    <IoCreateOutline />
+                                </div>
+                                <div className='text-xl'>create group</div>
+                            </button>
+                        </GroupChatModel>
                     </div>
                     <div>
 
