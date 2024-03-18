@@ -171,15 +171,22 @@ const OneToOneChat = () => {
 
                                                 <div key={m._id} className='w-fit mb-2 text-white  ml-auto flex gap-1'>
                                                     <div className='text-black border h-10 w-10 rounded-full text-center bg-slate-800'>
-                                                        <h1 className='mt-2 font-bold text-white'>{m.sender?.username && m.sender.username.charAt(0).toUpperCase()}</h1></div>
+                                                        {/* <h1 className='mt-2 font-bold text-white'>{m.sender?.username && m.sender.username.charAt(0).toUpperCase()}</h1> */}
+                                                        {/* <img src={user?.imgUrl} alt="error" className='rounded-full'/> */}
+                                                        <img className='w-10 h-10 rounded-full' src={user?.imgUrl} alt="dp" height={30} width={30} />
+                                                    </div>
                                                     <div className='bg-green-700 p-1 rounded-md'>{m.content}</div>
                                                 </div>
 
                                             </> :
                                                 <>
                                                     <div key={m._id} className=' w-fit  mb-2 text-white gap-1 flex'>
-                                                        <div className='text-black border h-10 w-10 rounded-full text-center bg-orange-950'>
-                                                            <h1 className='mt-2 font-bold text-white'>{m.sender?.username && m.sender.username.charAt(0).toUpperCase()}</h1></div>
+                                                        <div className='text-black  rounded-full text-center '>
+                                                            {/* <h1 className='mt-2 font-bold text-white'>{m.sender?.username && m.sender.username.charAt(0).toUpperCase()}</h1> */}
+                                                            {/* <img src={m.sender?.picture} alt="error" className='rounded-full' /> */}
+                                                            <img className='w-10 h-10 rounded-full' src={m.sender?.picture} alt="dp" height={30} width={30} />
+                                                        </div>
+
                                                         <div className='bg-sky-500 p-1 rounded-md'>{m.content}</div>
                                                     </div>
                                                 </>

@@ -10,7 +10,7 @@ const Home = () => {
         <div className="container shadow-md shadow-green-600 col-start-4 col-span-6 w-fit p-5 hover:transition-all hover:shadow-lg hover:shadow-green-700">
           
           <div className="header">
-            <h1 className='text-center font-bold'>😘 CHAT-COM 😘</h1>
+            <h1 className='text-center font-bold'> CHAT-COM </h1>
           </div>
           <div className="content">
             <p className='text-sm first-letter:text-3xl'>Welcome to CHAT-COM ! Simplify your conversations with our intuitive chat application. Connect with friends, share moments, and stay in the loop effortlessly. Sign up now and start chatting instantly. Your conversations, your way!</p>
